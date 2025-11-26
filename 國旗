@@ -1,0 +1,78 @@
+from browser import document as doc
+from browser import html
+import math
+
+# 建立畫布
+canvas = html.CANVAS(width=600, height=400)
+canvas.id = "taiwan_flag"
+doc["brython_div1"] <= canvas
+ctx = canvas.getContext("2d")
+
+
+# --------------- 國旗繪製函式（保持原樣，不變形） ---------------
+def draw_flag(ctx, scale=1):
+    flag_w = 240 * scale   # 國旗寬度(縮小一點避免超出)
+    flag_h = 160 * scale
+
+    # 以中心為原點繪圖
+    ox = -flag_w / 2
+    oy = -flag_h / 2
+
+    # 紅底
+    ctx.fillStyle = "rgb(255,0,0)"
+    ctx.fillRect(ox, oy, flag_w, flag_h)
+
+    # 青天
+    ctx.fillStyle = "rgb(0,0,150)"
+    ctx.fillRect(ox, oy, flag_w/2, flag_h/2)
+
+    # 太陽中心
+    cx = ox + flag_w/4
+    cy = oy + flag_h/4
+
+    # 白光芒（完全依照你原本的公式）
+    ctx.beginPath()
+    star_radius = flag_w / 8
+    angle = 0
+    for i in range(24):
+        angle += 5 * math.pi * 2 / 12
+        px = cx + math.cos(angle) * star_radius
+        py = cy + math.sin(angle) * star_radius
+        if i == 0:
+            ctx.moveTo(px, py)
+        else:
+            ctx.lineTo(px, py)
+    ctx.closePath()
+    ctx.fillStyle = "white"
+    ctx.fill()
+
+    # 藍圈
+    ctx.beginPath()
+    ctx.arc(cx, cy, flag_w * 17/240, 0, math.pi*2)
+    ctx.fillStyle = "rgb(0,0,149)"
+    ctx.fill()
+
+    # 白心
+    ctx.beginPath()
+    ctx.arc(cx, cy, flag_w/16, 0, math.pi*2)
+    ctx.fillStyle = "white"
+    ctx.fill()
+
+
+# --------------- 旋轉後繪製 ---------------
+def draw_rotated(angle, center_x, center_y):
+    ctx.save()
+    ctx.translate(center_x, center_y)
+    ctx.rotate(angle * math.pi / 180)
+    draw_flag(ctx, scale=1)
+    ctx.restore()
+
+
+# 清除畫面
+ctx.clearRect(0, 0, 600, 400)
+
+# 90°（左邊）
+draw_rotated(90, 150, 200)
+
+# 45°（右邊）
+draw_rotated(45, 450, 200)
