@@ -1,0 +1,22 @@
+def walk():
+    for i in range(9):
+        move()
+for i in range(6):
+        move();
+turn_left()       
+for i in range(4):
+        move();
+turn_left()       
+for i in range(5):
+        move();   
+turn_right();
+for i in range(5):
+        move();
+turn_left()       
+for i in range(4):
+        move();  
+turn_left()         
+walk();
+turn_left()       
+for i in range(3):
+        move();
