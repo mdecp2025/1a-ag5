@@ -1,0 +1,9 @@
+def turn_right():
+    for i in range(3):
+        turn_left()
+def walk():
+    for i in range(9):
+        move()
+for i in range(4):
+    walk();
+    turn_left();
