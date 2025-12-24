@@ -1,0 +1,8 @@
+def turn_right():
+    for i in range(3):
+        r.turn_left()
+for i in range(9):
+    r.move(1)
+    r.turn_left()
+    r.move(1)
+    turn_right()
